@@ -1,0 +1,140 @@
+/* General container style */
+div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+}
+
+/* Styling for span elements */
+span {
+    font-weight: bold;
+}
+
+/* Wrapper for the entire editor */
+.network-graph-editor {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Space out the content */
+    gap: 20px;
+    padding: 20px;
+    height: 100%; 
+    align-items: center; 
+}
+
+
+/* Wrapper for controls */
+.controls-wrapper {
+    display: flex;
+    flex-direction: column; /* Arrange controls vertically */
+    gap: 20px; /* Space between containers */
+    flex-shrink: 0; /* Prevent shrinking */
+    width: 600px; /* Set a fixed width for the controls */
+    height: 400px; /* Fixed height for the scrollable box */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Add a border around the box */
+    border-radius: 10px; /* Rounded corners for aesthetics */
+    padding: 10px; /* Add some inner padding */
+    box-sizing: border-box; /* Ensure padding is included in width/height */
+}
+
+/* Add scrollbars only when necessary */
+.controls-wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+.controls-wrapper::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+.controls-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+}
+
+/* Node Editor and Edge Editor containers */
+.node-edit-container, .edge-edit-container {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%; /* Adjust width as needed */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Heading styles */
+.node-edit-container h3, .edge-edit-container h3 {
+    margin-top: 0;
+}
+
+/* Slider styling */
+.slider {
+    width: 100%;
+    margin: 10px 0;
+}
+
+.slider-value {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+
+/* Input and select fields */
+.form-input {
+    padding: 5px;
+    margin: 5px 0;
+    width: 200px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+/* Button styles */
+.form-button {
+    padding: 10px 15px;
+    margin: 5px 0;
+    font-size: 1rem;
+    background-color: #e789ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+    background-color: #b769ca;
+}
+
+.form-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* SVG container stays on the right */
+.svg-container-wrapper {
+    flex-grow: 1; /* Take remaining horizontal space */
+    display: flex;
+    justify-content: center; /* Center the SVG within its container */
+    align-items: center; /* Vertically center the SVG */
+}
+
+.navigate-container {
+  display: flex; /* Enable Flexbox */
+  flex-direction: row; /* Align items in a row */
+  gap: 0px; /* Optional: Add space between buttons */
+}
+
+/* Styling for SVG container */
+.svg-container {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 100%;
+    height: 400px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}

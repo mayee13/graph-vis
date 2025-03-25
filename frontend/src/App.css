@@ -36,3 +36,105 @@
     transform: rotate(360deg);
   }
 }
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 8px; /* Adjust space between heading and content */
+  font-size: 36px; /* Increase the font size */
+  font-family: 'Script'; /* Use a modern sans-serif font */
+  font-weight: 600; /* Make the font bold for emphasis */
+  letter-spacing: 1px; /* Optional: add spacing between letters */
+  text-transform: uppercase;
+}
+
+.page-container {
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  height: 100vh; /* Full viewport height */
+  position: relative; /* Ensure relative positioning for child elements */
+}
+
+.saved-graphs-container {
+  width: 200px; /* Optional width */
+  max-height: 400px; /* Optional max height */
+  overflow-y: auto; /* Add scroll if needed */
+  background-color: #f9f9f9; /* Light background */
+  border: 1px solid #ccc; /* Optional border */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+  padding: 8px; /* Add padding */
+  margin-bottom: 16px; /* Add margin to create space between sections */
+}
+
+.saved-graphs h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.saved-graphs ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.graph-item {
+  list-style-type: none; /* Ensure no bullets are shown */
+  margin-bottom: 8px;
+}
+
+.graph-item button {
+  margin: 0 20px; /* Add horizontal margin to the buttons */
+  padding: 10px 10px; /* Optional: Add padding for better button sizing */
+  width: calc(100% - 40px); /* Ensure buttons take up most of the container width while respecting margins */
+  box-sizing: border-box; /* Include padding and margin in button width calculation */
+  background-color: #b98ff3;
+  color: white;
+  border-radius: 4px;
+  border: none;
+}
+
+.graph-item button:hover {
+  background-color: #9471c6;
+}
+
+.graph-input-section {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  gap: 8px;
+  margin-top: 16px; /* Space between input section and above content */
+}
+
+.graph-input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%; /* Ensure input fills its container */
+  max-width: 300px; /* Optional: set a max width */
+}
+
+.create-button {
+  background-color: #b98ff3;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Ensure the button takes up full width */
+  max-width: 300px; /* Optional: set a max width */
+}
+
+.create-button:hover {
+  background-color: #9471c6;
+}

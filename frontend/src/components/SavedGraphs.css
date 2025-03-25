@@ -1,0 +1,75 @@
+.saved-graphs {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding: 20px;
+    max-width: 400px;
+    margin: auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .saved-graphs h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 16px;
+  }
+  
+  .saved-graphs ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .graph-item {
+    margin-bottom: 8px;
+  }
+  
+  .graph-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .graph-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .graph-input-section {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  
+  .graph-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .create-button {
+    background-color: #b98ff3;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .create-button:hover {
+    background-color: #9471c6;;
+  }
+  
