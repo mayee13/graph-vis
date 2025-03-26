@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './SavedGraphs.css'
 
 const SavedGraphs = ({ graphs, fetchGraphByName, doCreate, doHome }) => {
-    console.log("SavedGraph")
+    // console.log("SavedGraph")
     const [graphName, setGraphName] = useState("");
     const handleCreateClick = () => {
         doCreate(graphName); 

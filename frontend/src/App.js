@@ -6,7 +6,7 @@ import SavedGraphs from './components/SavedGraphs';
 
 const App = () => {
     const [graphs, setGraphs] = useState([]);
-    const [currentGraph, setCurrentGraph] = useState({ nodes: ["A"], links: [] });
+    const [currentGraph, setCurrentGraph] = useState({ nodes: ["A"], links: [], directed: true });
     const [graphName, setGraphName] = useState("");
     const [pageState, setPageState] = useState(3);
 
@@ -31,6 +31,7 @@ const App = () => {
                 name: graphName,
                 nodes: graph.nodes,
                 links: graph.links,
+                directed: graph.directed
               }),
             });
       
@@ -73,6 +74,7 @@ const App = () => {
     
     const doCreate = (name) => {
       console.log("do create!");
+      console.log(currentGraph.directed); 
         if (!name) {
             alert("Please enter a name for your graph.");
             console.log("no name :(")
@@ -84,7 +86,7 @@ const App = () => {
 
     const doBackClick = () => {
         setPageState(1); 
-        setCurrentGraph({ nodes: ["A"], links: [] })
+        setCurrentGraph({ nodes: ["A"], links: [], directed: true })
         setGraphName("")
     }
 

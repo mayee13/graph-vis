@@ -22,7 +22,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS graphs (
             name TEXT PRIMARY KEY,
             nodes TEXT,
-            links TEXT
+            links TEXT,
+            directed TEXT
         )
     ''')
     conn.commit()
@@ -35,6 +36,7 @@ def save_graph():
     name = data['name']
     nodes = json.dumps(data['nodes'])  # Serialize nodes as JSON string
     links = json.dumps(data['links'])  # Serialize links as JSON string
+    directed = json.dumps(data['directed'])
     conn = sqlite3.connect('graphs.db')
     cursor = conn.cursor()
     # Check if graph with the same name already exists
@@ -45,15 +47,15 @@ def save_graph():
         # If graph exists, replace it (UPDATE)
         cursor.execute('''
             UPDATE graphs
-            SET nodes = ?, links = ?
+            SET nodes = ?, links = ?, directed = ?
             WHERE name = ?
-        ''', (nodes, links, name))
+        ''', (nodes, links, directed, name))
     else:
         # If graph does not exist, insert a new record (INSERT)
         cursor.execute('''
-            INSERT INTO graphs (name, nodes, links)
-            VALUES (?, ?, ?)
-        ''', (name, nodes, links))
+            INSERT INTO graphs (name, nodes, links, directed)
+            VALUES (?, ?, ?, ?)
+        ''', (name, nodes, links, directed))
 
     conn.commit()
     conn.close()
@@ -74,7 +76,7 @@ def get_saved_graphs():
 def get_graph(name):
     conn = sqlite3.connect('graphs.db')
     cursor = conn.cursor()
-    cursor.execute('SELECT name, nodes, links FROM graphs WHERE name = ?', (name,))
+    cursor.execute('SELECT name, nodes, links, directed FROM graphs WHERE name = ?', (name,))
     row = cursor.fetchone()
     conn.close()
 
@@ -82,7 +84,8 @@ def get_graph(name):
         return jsonify({
             'name': row[0],
             'nodes': json.loads(row[1]),  # Deserialize nodes
-            'links': json.loads(row[2])  # Deserialize links
+            'links': json.loads(row[2]),  # Deserialize links
+            'directed': json.loads(row[3]) # Deserialized directed value
         })
     else:
         return jsonify({'error': f'Graph "{name}" not found'}), 404

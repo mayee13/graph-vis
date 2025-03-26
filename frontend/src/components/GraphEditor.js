@@ -13,7 +13,7 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
   const [newStart, setNewStart] = useState("Select a node");
   const [newEnd, setNewEnd] = useState("Select a node");
   const [newWeight, setNewWeight] = useState(0); 
-  const [directed, setDirected] = useState(true); 
+  const [directed, setDirected] = useState(data.directed); 
 
   // constants for visualization 
   const [visited, setVisited] = useState([]); 
@@ -36,9 +36,9 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
   }
 
   const handleLinksChange = (event) => {
-    console.log("adding link between...")
-    console.log(newStart)
-    console.log(newEnd)
+    // console.log("adding link between...")
+    // console.log(newStart)
+    // console.log(newEnd)
     if (newStart !== "Select a node" && newEnd !== "Select a node") {
         addNewLink(newStart, newEnd); 
     }
@@ -84,7 +84,7 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
         setVisited(updatedVisited);
         setCurrent(updatedCurrent); 
     }); 
-    console.log("handeling dijkstras...")
+    // console.log("handeling dijkstras...")
     if (path !== undefined) {
       const pathLinks = [];
       for (const link of path.steps) {
@@ -110,7 +110,7 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
             nodes.push({id: String.fromCharCode(65 + i)});
         }
     }
-    onSaveClick({nodes: nodes, links: links}); 
+    onSaveClick({nodes: nodes, links: links, directed: directed}); 
   }
 
   useEffect(() => {

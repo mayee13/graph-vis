@@ -2,7 +2,7 @@ import React from 'react';
 import './WelcomePage.css'
 
 const WelcomePage = ({onBack}) => {
-    console.log("Welcome!")
+    // console.log("Welcome!")
     return (
         <div className='welcome-div'>
           <section className="welcome-heading">Welcome to GraphVis!</section>
