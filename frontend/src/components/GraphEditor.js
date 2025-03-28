@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import { dijkstra } from '../algorithm/dijkstra';
+import { prim } from '../algorithm/prim'
 import './GraphEditor.css';
 
 const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick}) => {
@@ -17,8 +18,11 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
 
   // constants for visualization 
   const [visited, setVisited] = useState([]); 
-  const [path, setPath] = useState([]); 
   const [current, setCurrent] = useState(null); 
+  const [sptPath, setsptPath] = useState([]);
+  const [mstPath, setmstPath] = useState([]);
+  const [currPath, setCurrPath] = useState([]);
+  const [path, setPath] = useState([]); 
   const [dijkstraStart, setDijkstraStart] = useState("A"); 
   const [dijkstraEnd, setDijkstraEnd] = useState("A")
 
@@ -80,26 +84,43 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
   }
 
   const handleDijkstra = async (event) => {
-    const path = await dijkstra(links, dijkstraStart, dijkstraEnd, (updatedVisited, updatedCurrent) => {
+    await dijkstra(links, dijkstraStart, (updatedVisited, updatedCurrent, updatedsptPath, updatedCurrPath) => {
         setVisited(updatedVisited);
         setCurrent(updatedCurrent); 
+        setsptPath(updatedsptPath);
+        setCurrPath(updatedCurrPath); 
     }); 
     // console.log("handeling dijkstras...")
-    if (path !== undefined) {
-      const pathLinks = [];
-      for (const link of path.steps) {
-        pathLinks.push({start: link.source, end: link.target}); 
-      }
-      setPath(pathLinks); 
-    } else {
-      alert("No path exists")
+    // if (path !== undefined) {
+    //   const pathLinks = [];
+    //   for (const link of path.steps) {
+    //     pathLinks.push({start: link.source, end: link.target}); 
+    //   }
+    //   setPath(pathLinks); 
+    // } else {
+    //   alert("No path exists")
+    // }
+  }
+
+  const handlePrim = async (event) => {
+    if (directed) {
+      alert("graph must be undirected")
+      return; 
     }
+    await prim(links, dijkstraStart, (updatedVisited, updatedCurrent, updatedmstPath) => {
+      setVisited(updatedVisited);
+      setCurrent(updatedCurrent);
+      setmstPath(updatedmstPath);
+    });
   }
 
   const handleReset = () => {
     setVisited([]);
     setPath([]);
     setCurrent(null); 
+    setCurrPath([]);
+    setsptPath([]);
+    setmstPath([]); 
   }
 
   const handleSaveClick = () => {
@@ -263,24 +284,28 @@ const GraphEditor = ({data, graphName, onSaveClick, onBackClick, onDeleteClick})
   svg
     .selectAll('.link')
     .attr('stroke', d =>
-      matches(path, d)
+      (matches(sptPath, d)) || matches(mstPath, d)
         ? 'green'
+        : matches(currPath, d) 
+        ? 'yellow'
         : 'black'
     )
     .attr('stroke-width', d =>
-    matches(path, d)
+    (matches(sptPath, d)) || matches(currPath, d) || matches(mstPath, d)
       ? 2
       : 1);
 
      function matches(path, link) {
-        for (const step of path) {
-            if (step.start === link.source.id && step.end === link.target.id) {
+      // console.log(link)
+        for (const sptLink of path) {
+            if (sptLink.source === link.source.id && sptLink.target === link.target.id) {
                 return true; 
             }
         }
         return false; 
     }
-  }, [numNodes, links, visited, path, current]); 
+    
+  }, [numNodes, links, visited, currPath, current, sptPath, mstPath]); 
 
  
 const elements = []; 
@@ -372,6 +397,9 @@ if (numNodes <= 26) {
       <div>
         <button onClick={handleDijkstra} className="form-button">
           Run Dijkstra's
+        </button>
+        <button onClick={handlePrim} className="form-button">
+          Run Prim's
         </button>
         <button onClick={handleReset} className="form-button">
           Reset

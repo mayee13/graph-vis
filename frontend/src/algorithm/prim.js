@@ -1,6 +1,6 @@
 import { Heap } from "./heap";
 
-export const prim = async (links, startNode, endNode, updateVisual) => {
+export const prim = async (links, startNode, updateVisual) => {
     const nodeMap = new Map(); 
 
     for (const link of links) {
@@ -10,50 +10,55 @@ export const prim = async (links, startNode, endNode, updateVisual) => {
             nodeMap.set(link.source, [link]); 
         }
     }
+    console.log(nodeMap);
 
     // set of visited end nodes
-    const visited = new Set();  
+    const visited = new Set(); 
+    const mst = new Set(); 
     
     const active = new Heap(compareEdge);
-    const startEdge = {start: startNode, end: startNode, weight: 0}
+    const startEdge = {source: startNode, target: startNode, weight: 0}
     active.add(startEdge); 
 
     while (!active.isEmpty()) {
-        const minEdge = active.remove();
         
+        const minEdge = active.remove();
+
+        if (visited.has(minEdge.target)) {
+            continue; 
+        }
+
+        mst.add(minEdge);
+        console.log("exploring edge");
+        console.log(minEdge);
         await new Promise((resolve) => {
             setTimeout(() => {
-                updateVisual([...visited], minEdge.end)
+                updateVisual([...visited], minEdge.target, [...mst])
                 resolve(); 
             }, 1000)
         });
 
-        // if (minEdge.start === startNode && minEdge.end === endNode) {
-        //     visited.add(minEdge.end);
-        //     return minEdge;  
-        // } 
-
-        if (visited.has(minEdge.end)) {
-            continue; 
-        }
-
-        visited.add(minEdge.end);
+        console.log("adding to visited...")
+        visited.add(minEdge.target);
         
-        if (!nodeMap.has(minEdge.end)) {
+        if (!nodeMap.has(minEdge.target)) {
             continue; 
         }
-        for (const link of nodeMap.get(minEdge.end)) {
+        console.log("adding new links...")
+        for (const link of nodeMap.get(minEdge.target)) {
             if (!visited.has(link.target)) {
                 const newPath = {
-                    start: link.source, 
-                    end: link.target, 
+                    source: link.source, 
+                    target: link.target, 
                     weight: link.weight
                 }
                 active.add(newPath); 
             }
         }
+        console.log("done adding new links")
 
     }
+    console.log("outside function")
     return undefined; 
 }
 

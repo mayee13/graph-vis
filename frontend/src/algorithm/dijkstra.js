@@ -1,6 +1,6 @@
 import { Heap } from "./heap";
 
-export const dijkstra = async (links, startNode, endNode, updateVisual) => {
+export const dijkstra = async (links, startNode, updateVisual) => {
     const nodeMap = new Map(); 
 
     for (const link of links) {
@@ -12,7 +12,8 @@ export const dijkstra = async (links, startNode, endNode, updateVisual) => {
     }
 
     // set of visited end nodes
-    const visited = new Set();  
+    const visited = new Set(); 
+    const sptPath = new Set();  
     
     const active = new Heap(comparePaths);
     const startPath = {start: startNode, end: startNode, steps: [], weight: 0}
@@ -20,23 +21,28 @@ export const dijkstra = async (links, startNode, endNode, updateVisual) => {
 
     while (!active.isEmpty()) {
         const minPath = active.remove();
-        
-        await new Promise((resolve) => {
-            setTimeout(() => {
-                updateVisual([...visited], minPath.end)
-                resolve(); 
-            }, 1000)
-        });
-
-        if (minPath.start === startNode && minPath.end === endNode) {
-            visited.add(minPath.end);
-            return minPath;  
-        } 
-
         if (visited.has(minPath.end)) {
             continue; 
         }
+        for (const link of minPath.steps) {
+            // console.log(link);
+            sptPath.add(link);
+        }
+        // console.log(sptPath);
+        await new Promise((resolve) => {
+            setTimeout(() => {
+                updateVisual([...visited], minPath.end, [...sptPath], minPath.steps);
+                resolve(); 
+            }, 1000)
+        });
+            
+        
+        // if (minPath.start === startNode && minPath.end === endNode) {
+        //     visited.add(minPath.end);
+        //     return minPath;  
+        // } 
 
+        
         visited.add(minPath.end);
         
         if (!nodeMap.has(minPath.end)) {
